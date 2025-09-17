@@ -473,32 +473,40 @@
         }
         
         .input-group {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
         }
         
         .input-group label {
             font-weight: 600;
             color: #374151;
-            grid-column: 1 / -1;
             margin-bottom: 5px;
         }
         
+        .input-wrapper {
+            display: flex;
+            position: relative;
+        }
+        
         .input-group input {
+            flex: 1;
             padding: 12px 15px;
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            border-radius: 8px 0 0 8px;
             font-size: 1em;
             transition: all 0.3s ease;
             font-family: 'Courier New', monospace;
+            min-width: 0; /* Previene overflow */
         }
         
         .input-group input:focus {
             outline: none;
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            z-index: 1;
+            position: relative;
         }
         
         .input-unit {
@@ -510,6 +518,9 @@
             font-weight: 600;
             color: #6b7280;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            min-width: fit-content;
         }
         
         .calculate-btn {
@@ -638,31 +649,236 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+            
             .content {
                 padding: 30px 20px;
             }
             
-            .partner-header {
+            .methodology-box,
+            .comparison-section,
+            .insights-section,
+            .practical-examples {
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .method-item {
                 flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .method-icon {
                 margin-right: 0;
             }
             
-            .partner-rank {
-                position: relative;
-                top: auto;
-                right: auto;
-                align-self: flex-start;
+            .calculator-card {
+                padding: 20px;
+            }
+            
+            .calculator-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .calculator-title {
+                font-size: 1.1em;
+            }
+            
+            .calculator-ratio {
+                align-self: center;
+                font-size: 0.85em;
+            }
+            
+            .input-group {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .input-group input {
+                border-radius: 8px;
+                font-size: 16px; /* Evita lo zoom su iOS */
+            }
+            
+            .input-unit {
+                border-radius: 8px;
+                border-left: 2px solid #e5e7eb;
+                text-align: center;
+            }
+            
+            .calculate-btn {
+                padding: 18px 25px;
+                font-size: 1em;
+                width: 100%;
+            }
+            
+            .result-comparison {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .result-option {
+                padding: 15px;
+            }
+            
+            .result-cost {
+                font-size: 1.5em;
+            }
+            
+            .result-details {
+                font-size: 0.85em;
+                line-height: 1.4;
+            }
+            
+            .result-verdict {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+            
+            .savings-highlight {
+                font-size: 0.9em;
+                padding: 6px 12px;
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            /* Miglioramenti griglia responsive */
+            .comparison-section > div:first-of-type {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .comparison-section > div:first-of-type > div {
+                padding: 15px;
+                text-align: center;
+            }
+            
+            .footer {
+                padding: 30px 20px;
+            }
+            
+            .footer-content {
+                text-align: left;
+            }
+            
+            .footer-content > div:last-child {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 0.95em;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .methodology-box,
+            .comparison-section,
+            .practical-examples {
+                padding: 15px;
+            }
+            
+            .calculator-card {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .calculator-inputs {
+                gap: 15px;
+            }
+            
+            .input-group input,
+            .input-unit {
+                padding: 14px 12px;
+                font-size: 16px;
+            }
+            
+            .calculate-btn {
+                padding: 16px 20px;
+                font-size: 0.95em;
+            }
+            
+            .calculation-result {
+                padding: 20px;
+            }
+            
+            .result-header {
+                font-size: 1.1em;
                 margin-bottom: 15px;
             }
             
-            .value-analysis {
-                grid-template-columns: 1fr;
+            .result-cost {
+                font-size: 1.3em;
             }
             
-            .examples-grid,
-            .insights-grid,
-            .top-performers {
-                grid-template-columns: 1fr;
+            .result-details {
+                font-size: 0.8em;
+            }
+            
+            .result-verdict {
+                padding: 12px;
+                font-size: 1em;
+            }
+            
+            /* Header del calcolatore più compatto */
+            .calculator-header span:first-child {
+                font-size: 1.5em;
+            }
+            
+            /* Testo della spiegazione più piccolo */
+            .result-verdict + div {
+                font-size: 0.8em !important;
+                padding: 12px !important;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Miglioramenti touch per mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .calculate-btn {
+                -webkit-appearance: none;
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            
+            .input-group input {
+                -webkit-appearance: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Migliore esperienza di scroll */
+            .calculation-result {
+                scroll-margin-top: 20px;
+            }
+            
+            /* Bottoni più grandi per touch */
+            .calculate-btn:hover {
+                transform: none;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             }
         }
         
@@ -830,20 +1046,26 @@
                         <div class="calculator-inputs">
                             <div class="input-group">
                                 <label>Costo in Avios richiesti:</label>
-                                <input type="number" class="avios-needed" placeholder="es. 15000">
-                                <span class="input-unit">Avios</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 15000">
+                                    <span class="input-unit">Avios</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Tasse e supplementi:</label>
-                                <input type="number" class="taxes-fees" placeholder="es. 125.50" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 125.50" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Prezzo biglietto normale:</label>
-                                <input type="number" class="regular-price" placeholder="es. 450.00" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 450.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -865,20 +1087,26 @@
                         <div class="calculator-inputs">
                             <div class="input-group">
                                 <label>Costo in Avios richiesti:</label>
-                                <input type="number" class="avios-needed" placeholder="es. 12500">
-                                <span class="input-unit">Avios</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 12500">
+                                    <span class="input-unit">Avios</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Tasse e supplementi:</label>
-                                <input type="number" class="taxes-fees" placeholder="es. 89.20" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 89.20" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Prezzo biglietto normale:</label>
-                                <input type="number" class="regular-price" placeholder="es. 280.00" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 280.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -900,20 +1128,26 @@
                         <div class="calculator-inputs">
                             <div class="input-group">
                                 <label>Costo in Flying Blue richiesti:</label>
-                                <input type="number" class="avios-needed" placeholder="es. 74000">
-                                <span class="input-unit">Miles</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 74000">
+                                    <span class="input-unit">Miles</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Tasse e supplementi:</label>
-                                <input type="number" class="taxes-fees" placeholder="es. 310.00" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 310.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                             
                             <div class="input-group">
                                 <label>Prezzo biglietto normale:</label>
-                                <input type="number" class="regular-price" placeholder="es. 2543.00" step="0.01">
-                                <span class="input-unit">€</span>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 2543.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -928,6 +1162,240 @@
                     <div class="calculator-card" data-partner="singapore" data-ratio-mr="3" data-ratio-dest="2">
                         <div class="calculator-header">
                             <span>🇸🇬</span>
+                            <span class="calculator-title">Singapore Airlines KrisFlyer</span>
+                            <span class="calculator-ratio">3 MR → 2 Miles</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in KrisFlyer richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 63000">
+                                    <span class="input-unit">Miles</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 420.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 4500.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateTransfer(this)">
+                            🧮 Calcola Convenienza
+                        </button>
+                        
+                        <div class="calculation-result" style="display: none;"></div>
+                    </div>
+                    
+                    <!-- EMIRATES CALCULATOR -->
+                    <div class="calculator-card" data-partner="emirates" data-ratio-mr="5" data-ratio-dest="4">
+                        <div class="calculator-header">
+                            <span>🇦🇪</span>
+                            <span class="calculator-title">Emirates Skywards</span>
+                            <span class="calculator-ratio">5 MR → 4 Miles</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in Skywards richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 45000">
+                                    <span class="input-unit">Miles</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 280.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 1200.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateTransfer(this)">
+                            🧮 Calcola Convenienza
+                        </button>
+                        
+                        <div class="calculation-result" style="display: none;"></div>
+                    </div>
+                    
+                    <!-- CATHAY PACIFIC CALCULATOR -->
+                    <div class="calculator-card" data-partner="cathay" data-ratio-mr="5" data-ratio-dest="4">
+                        <div class="calculator-header">
+                            <span>🇭🇰</span>
+                            <span class="calculator-title">Cathay Pacific Asia Miles</span>
+                            <span class="calculator-ratio">5 MR → 4 Miles</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in Asia Miles richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 15000">
+                                    <span class="input-unit">Miles</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 150.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 850.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateTransfer(this)">
+                            🧮 Calcola Convenienza
+                        </button>
+                        
+                        <div class="calculation-result" style="display: none;"></div>
+                    </div>
+                    
+                    <!-- ITA AIRWAYS CALCULATOR -->
+                    <div class="calculator-card" data-partner="ita" data-ratio-mr="1" data-ratio-dest="1">
+                        <div class="calculator-header">
+                            <span>🇮🇹</span>
+                            <span class="calculator-title">ITA Airways Volare</span>
+                            <span class="calculator-ratio">1 MR → 1 Punto</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in Punti Volare richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 12000">
+                                    <span class="input-unit">Punti</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 25.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 180.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateTransfer(this)">
+                            🧮 Calcola Convenienza
+                        </button>
+                        
+                        <div class="calculation-result" style="display: none;"></div>
+                    </div>
+                    
+                    <!-- DELTA CALCULATOR -->
+                    <div class="calculator-card" data-partner="delta" data-ratio-mr="3" data-ratio-dest="2">
+                        <div class="calculator-header">
+                            <span>🇺🇸</span>
+                            <span class="calculator-title">Delta Air Lines SkyMiles</span>
+                            <span class="calculator-ratio">3 MR → 2 Miles</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in SkyMiles richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 25000">
+                                    <span class="input-unit">Miles</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 45.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 650.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateTransfer(this)">
+                            🧮 Calcola Convenienza
+                        </button>
+                        
+                        <div class="calculation-result" style="display: none;"></div>
+                    </div>
+                    
+                    <!-- SAS CALCULATOR -->
+                    <div class="calculator-card" data-partner="sas" data-ratio-mr="5" data-ratio-dest="4">
+                        <div class="calculator-header">
+                            <span>🇸🇪</span>
+                            <span class="calculator-title">SAS EuroBonus</span>
+                            <span class="calculator-ratio">5 MR → 4 Punti</span>
+                        </div>
+                        
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Costo in EuroBonus richiesti:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="avios-needed" placeholder="es. 20000">
+                                    <span class="input-unit">Punti</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Tasse e supplementi:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="taxes-fees" placeholder="es. 85.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Prezzo biglietto normale:</label>
+                                <div class="input-wrapper">
+                                    <input type="number" class="regular-price" placeholder="es. 380.00" step="0.01">
+                                    <span class="input-unit">€</span>
+                                </div>
+                            </div>
+                        </div><span>🇸🇬</span>
                             <span class="calculator-title">Singapore Airlines KrisFlyer</span>
                             <span class="calculator-ratio">3 MR → 2 Miles</span>
                         </div>
